@@ -1,2 +1,62 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+def display_matrix(arr):
+    for row in arr:
+        for col in row:
+            print(col,end=' ')
+        print()
+
+def create_matrix():
+    new_matrix = [[0]*3 for i in range(3)]
+    for row in range(len(new_matrix)):
+        for col in range(len(new_matrix[0])):
+            new_matrix[row][col]=float(input('number['+str(col)+','+str(row)+']: '))
+    return(new_matrix)
+    
+def get_determinate(mat):
+    pt1= mat[1][1]*mat[2][2]-mat[2][1]*mat[1][2]
+    pt2= mat[0][1]*mat[2][2]-mat[2][1]*mat[0][2]
+    pt3= mat[0][1]*mat[1][2]-mat[1][1]*mat[0][2]
+    det = mat[0][0]*pt1 - mat[1][0]*pt2 + mat[2][0]*pt3
+    return(det)
+
+def cof_M(mat):
+    new_mat=[[0]*3 for i in range(3)]
+    row_l=len(new_mat)
+    col_l=len(new_mat[0])
+    for row in range(row_l):
+        for col in range(col_l):
+            if (row + col)%2==0:
+                sign = 1
+            else:
+                sign = 1
+            new_mat[row][col] = sign*(mat[(row+1)%row_l][(col+1)%col_l]*mat[(row+2)%row_l][(col+2)%col_l] - mat[(row+2)%row_l][(col+1)%col_l]*mat[(row+1)%row_l][(col+2)%col_l])
+    return(new_mat)
+    
+def row_col_swap(mat):
+    new_mat=[[0]*3 for i in range(3)]
+    for row in range(len(new_mat)):
+        for col in range(len(new_mat[0])):
+            new_mat[row][col]=mat[col][row]
+    return(new_mat)
+
+def matrix_real_devide(mat,num):
+    new_mat=[[0]*3 for i in range(3)]
+    for row in range(len(new_mat)):
+        for col in range(len(new_mat[0])):
+            new_mat[row][col] = round(mat[row][col]/num,3)
+    return(new_mat)
+print('matrix: ')
+matrix1=create_matrix()
+print()
+display_matrix(matrix1)
+print()
+determinate=get_determinate(matrix1)
+print(determinate)
+print()
+matrix2=cof_M(matrix1)
+display_matrix(matrix2)
+print()
+matrix3=row_col_swap(matrix2)
+display_matrix(matrix3)
+print()
+matrix4=matrix_real_devide(matrix3,determinate)
+display_matrix(matrix4)
